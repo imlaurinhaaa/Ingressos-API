@@ -56,4 +56,21 @@ const deleteIngresso = async (req, res) => {
     }
 };
 
-module.exports = { getAllIngressos, getIngresso, addIngresso, updateIngresso, deleteIngresso };
+const vendaIngresso = async (req, res) => {
+    try {
+        const { id, quantidade } = req.body;
+        const ingresso = await ingressoModel.getIngressoById(id);
+        if (!ingresso) {
+            return res.status(404).json({ message: "Ingresso não encontrado." });
+        }
+        if (ingresso.quantidade_disponivel <= quantidade) {
+            return res.status(400).json({ message: "Quantidade indisponível." });
+        }
+        const updatedIngresso = await ingressoModel.vendaIngresso(id, quantidade);
+        res.json({ message: "Ingresso vendido com sucesso.", ingresso: updatedIngresso });
+    } catch (error) {
+        res.status(404).json({ message: "Erro ao vender ingresso." });
+    }
+}
+
+module.exports = { getAllIngressos, getIngresso, addIngresso, updateIngresso, deleteIngresso, vendaIngresso };
