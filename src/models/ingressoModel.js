@@ -18,5 +18,13 @@ const addIngresso = async (evento, local_evento, data_evento, categoria, preco, 
     return result.rows[0];
 };
 
+const updateIngresso = async (id, quantidade_disponivel) => {
+    const result = await pool.query(
+        "UPDATE ingressos SET quantidade_disponivel = $1 WHERE id = $2 RETURNING *",
+        [quantidade_disponivel, id]
+    );
+    return result.rows[0];
 
-module.exports = { getIngressos, getIngressoById, addIngresso };
+}
+
+module.exports = { getIngressos, getIngressoById, addIngresso, updateIngresso };
