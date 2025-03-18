@@ -63,9 +63,6 @@ const vendaIngresso = async (req, res) => {
         if (!ingresso) {
             return res.status(404).json({ message: "Ingresso não encontrado." });
         }
-        if (ingresso.quantidade_disponivel <= quantidade) {
-            return res.status(400).json({ message: "Quantidade indisponível." });
-        }
         const updatedIngresso = await ingressoModel.vendaIngresso(id, quantidade);
         res.json({ message: "Ingresso vendido com sucesso.", ingresso: updatedIngresso });
     } catch (error) {
