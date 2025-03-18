@@ -40,7 +40,7 @@ const vendaIngresso = async (id, quantidade) => {
     if (!ingresso) {
         return { error: "Ingresso não encontrado." };
     }
-    if (ingresso.quantidade_disponivel < quantidade) {
+    if (ingresso.quantidade_disponivel <= quantidade) {
         return { error: "Quantidade insuficiente de ingressos." };
     }
     const result = await pool.query(
