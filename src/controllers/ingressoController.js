@@ -19,6 +19,21 @@ const getIngresso = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: "Erro ao encontrar ingresso" })
     }
-}
+};
 
-module.exports = { getAllIngressos, getIngresso };
+const addIngresso = async (req, res) => {
+    try {
+        const { evento, local_evento, data_evento, categoria, preco, quantidade_disponivel } = req.body;
+        const newIngresso = await ingressoModel.addIngresso(evento, local_evento, data_evento, categoria, preco, quantidade_disponivel);
+        res.status(201).json(newIngresso);
+    } catch (error) {
+        if (error.code === "23505") {
+            return res.status(400).json({ message: "Ingresso já cadastrado." });
+        }
+        res.status(404).json({ message: "Erro ao criar Ingresso." });
+    }
+};
+
+
+
+module.exports = { getAllIngressos, getIngresso, addIngresso };
