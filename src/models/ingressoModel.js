@@ -25,6 +25,14 @@ const updateIngresso = async (id, quantidade_disponivel) => {
     );
     return result.rows[0];
 
-}
+};
 
-module.exports = { getIngressos, getIngressoById, addIngresso, updateIngresso };
+const deleteIngresso = async (id) => {
+    const result = await pool.query("DELETE FROM ingressos WHERE id = $1 RETURNING *", [id]);
+    if (result.rowCount === 0) {
+        return { error: "Ingresso não encontrado." };
+    }
+    return { message: "Ingresso deletado com sucesso." };
+};
+
+module.exports = { getIngressos, getIngressoById, addIngresso, updateIngresso, deleteIngresso };

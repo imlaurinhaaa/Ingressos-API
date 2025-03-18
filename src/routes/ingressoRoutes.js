@@ -7,6 +7,7 @@ router.get("/ingressos", ingressoController.getAllIngressos);
 router.post("/ingressos", ingressoController.addIngresso);
 router.get("/ingressos/:id", ingressoController.getIngresso);
 router.put("/ingressos/:id", ingressoController.updateIngresso);
+router.delete("/ingressos/:id", ingressoController.deleteIngresso);
 
 
 module.exports = router;
