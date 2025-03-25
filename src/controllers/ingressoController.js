@@ -59,10 +59,6 @@ const deleteIngresso = async (req, res) => {
 const vendaIngresso = async (req, res) => {
     try {
         const { id, quantidade } = req.body;
-        const ingresso = await ingressoModel.getIngressoById(id);
-        if (!ingresso) {
-            return res.status(404).json({ message: "Ingresso não encontrado." });
-        }
         const updatedIngresso = await ingressoModel.vendaIngresso(id, quantidade);
         res.json({ message: "Ingresso vendido com sucesso.", ingresso: updatedIngresso });
     } catch (error) {

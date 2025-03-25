@@ -40,8 +40,11 @@ const vendaIngresso = async (id, quantidade) => {
     if (!ingresso) {
         return { error: "Ingresso não encontrado." };
     }
-    if (ingresso.quantidade_disponivel < quantidade) {
+    if (ingresso.quantidade_disponivel <= 0) {
         return { error: "Quantidade insuficiente de ingressos." };
+    }
+    if (quantidade = 0) {
+        return { error: "Quantidade inválida." };
     }
     const result = await pool.query(
         "UPDATE ingressos SET quantidade_disponivel = $1 WHERE id = $2 RETURNING *",
